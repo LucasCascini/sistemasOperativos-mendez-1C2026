@@ -1,0 +1,16 @@
+__sync_lock_test_and_set(&lk->locked, 1): se trata de pisar el lock con un 1, es decir, acceder al lock. Devuelve 1 si estaba siendo usado previamente y 0 si estaba desbloqueado.
+__sync_lock_release(type *ptr, ...): Este builtin libera el lock adquirido por __sync_lock_test_and_set, generalmente esto significa escribir 0 en *ptr
+
+
+
+Sleep lock
+- Si el proceso no logra conseguir el lock se va a dormir
+- Cuando el lock es liberado, los procesos que lo esperaban se despiertan
+
+hay 2 formas de despertarlos:
+    - que el SO elija uno y lo despierte para obtener el lock
+    - que el SO despierte a todos y se maten por el lock
+
+Cuando se usa? 
+    - Cuando la espera sera larga
+    - En sistemas de un solo core
