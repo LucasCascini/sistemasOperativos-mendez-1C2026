@@ -2,7 +2,7 @@
 > Es la capa de software que maneja los recursos de una computadora. Para lograr esto y facilitarlo, lo hace mediante virtualizacion.
 
 ## ¿Qué hace? 
-> Provee servicios a los programas de usuario mediante una interfaz
+> Provee servicios a los programas de usuario mediante una interfaz (Syscalls)
 
 # El kernel
 Es la barrera entre las aplicaciones de usuario y el hardware. Es un programa especial que proporciona servicios a los programas (procesos), llamados system calls (Syscalls).
