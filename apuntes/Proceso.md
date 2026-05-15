@@ -25,6 +25,7 @@ El proceso tiene un contexto, puede pensarse como el estado completo del proceso
 - Espacio de direcciones de memoria o `address space`
 - Registros del procesador
 - Estructuras del kernel
+![proceso](./imagenes/proceso.png)
 
 ### Trampoline y trapframe:
 - Trampoline: codigo para guardar los registros y finalmente llama al kernel.
@@ -34,3 +35,41 @@ El proceso tiene un contexto, puede pensarse como el estado completo del proceso
     - invoca usertrap() y salta al kernel
 
 - Trapframe: lugar en donde se guardan los registros
+
+## De programa a proceso
+El kernel se encarga de:
+1. carga instrucciones y datos 
+2. crea el `Stack` y el `Heap`
+3. Transfiere el control al programa
+4. Protege al SO y al Programa.
+
+## Estados de un Proceso
+Se corre ***UN PROCESO*** a la vez por `CPU`.  
+Hay 3 estados generales:
+![estados de un proceso](./imagenes/estados.png)
+
+- Running: el proceso esta actualmente corriendo en el CPU, hasta que el kernel lo cierre por un `timer interrupt`, hasta que termine de correr, o hasta que se bloquee esperando por una respuesta de I/O.
+- Blocked: esta bloqueado esperando una respuesta de I/O.
+- Ready o Runnable: esta esperando a que el kernel lo elija para ser ejecutado por el CPU.
+
+## Contexto del Proceso
+`Contexto`: La informacion necesaria para describir completamente el estado de un proceso. Cada proceso tiene su propio contexto.  
+
+El contexto esta formado por:
+- El contenido del `address space` (memoria: text, data, heap y stack).
+- El contenido de los registros de hardware (cpu).
+- Las estructuras de datos que pertenecen al kernel relacionadas con el proceso (kernel: process table entry, configuracion de memoria, kernel stack).  
+
+Cada proceso ve *SOLAMENTE* su contexto.  
+
+### Process Control Block
+Cada proceso esta representado en el sistema operativo por un `Process Control Block (PCB)` que contiene informacion del proceso. Se suelen llamar tambien Process Table Entry porque se guardan en una tabla.  
+
+Entre el PCB se contiene:
+- `Process ID (PID)` y `Process Group ID (PGID)`.
+- Ubicacion del mapa de direcciones del kernel u area del proceso.
+- Estado
+- Puntero al siguiente proceso en el planificador y al anterior (es una lista enlazada)
+- Prioridad
+- Informacion para el manejo de señales
+- Informacion para la administracion de memoria.
